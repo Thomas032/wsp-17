@@ -14,7 +14,7 @@ import { parse } from "node:path";
 function parseNewCategory(body: unknown): NewCategory | null {
 		const {name} = body as Partial<NewCategory>
 
-		if(name !== "string"){
+		if(typeof name !== "string"){
 			return null
 		}
 		return {name}
@@ -28,7 +28,7 @@ categoryRouter.get("/", (_req, res) => {
 });
 
 categoryRouter.post("/", (req, res) => {
-		const newCategory = parseNewCategory(req)
+		const newCategory = parseNewCategory(req.body)
 		if (!newCategory){
 			res.status(400).json({error: "name is required"})
 			return
