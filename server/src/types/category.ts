@@ -1,6 +1,6 @@
 export type Category = {
 	id: string;
 	name: string;
-}
+};
 
-export type NewCategory = Omit<Category, "id">
+export type NewCategory = Omit<Category, "id">;
