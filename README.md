@@ -4,7 +4,7 @@ Starting point for the Web Software Production course project.
 This project will grow week by week.
 
 - `client/` — React + Vite + TypeScript frontend
-- `server/` — Node + Express + TypeScript backend (in-memory storage)
+- `server/` — Node + Express + TypeScript backend (PostgreSQL storage)
 
 Each part is an independent npm project with its own `node_modules`, and its own Biome config for linting/formatting.
 
@@ -25,11 +25,12 @@ src/
   app.ts                     # configures the Express app (middleware + routes)
   server.ts                  # entry point: starts listening
   types/expense.ts           # Expense / NewExpense types
-  store/expense.ts           # in-memory storage
+  db/pool.ts                 # shared PostgreSQL connection pool
+  store/expense.ts           # SQL queries against the database
   routes/expense.ts          # GET/POST/PUT/DELETE handlers, mounted at /api/expenses
 ```
 
-Storage is in-memory only (see `server/src/store/expense.ts`) — data resets every time the server restarts, and it isn't shared across multiple server instances. There's no database yet.
+Storage is PostgreSQL, reached through the shared pool in `server/src/db/pool.ts`. The connection is configured through environment variables (`PGHOST`, `PGPORT`, `PGUSER`, `PGPASSWORD`, `PGDATABASE`) — see `compose.yaml` for the values the containers use. The database must be running for the server to work; start it with `docker compose up -d db` (the schema in `db/init/` is applied on first boot).
 
 Available endpoints, all under `/api/expenses`:
 
@@ -74,6 +75,24 @@ src/
     ExpenseTotal.tsx        # running total
   App.tsx                   # composition root, no fetch/state logic itself
 ```
+
+## Testing
+
+Tests live in `server/test/` and run with [Vitest](https://vitest.dev/). The integration tests talk to a real database, so start it first:
+
+```
+docker compose up -d db
+```
+
+Then run them from `server/`:
+
+```
+cd server
+npm test           # run once
+npm run test:watch # re-run on changes
+```
+
+They use a **separate** `app_test_db` database (configured in `server/vitest.config.ts`), so they never touch the dev `app_db` data.
 
 ## Linting
 

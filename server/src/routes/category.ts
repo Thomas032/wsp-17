@@ -11,7 +11,7 @@ import { parse } from "node:path";
 
 // Validates and narrows an unknown request body into a NewCategory,
 // or returns null if the name is missing/wrong type.
-function parseNewCategory(body: unknown): NewCategory | null {
+export function parseNewCategory(body: unknown): NewCategory | null {
 		const {name} = body as Partial<NewCategory>
 
 		if(typeof name !== "string"){
