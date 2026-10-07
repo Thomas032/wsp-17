@@ -12,15 +12,17 @@ export function CategoryList({
 	categories,
 	onUpdate,
 	onDelete,
-}: CategoryListProps) { 
-	return <ul>
-		{categories.map((category) => (
-			<CategoryListItem
-				key={category.id}
-				category={category}
-				onUpdate={onUpdate}
-				onDelete={onDelete}
-			/>
-		))}
-	</ul>;
+}: CategoryListProps) {
+	return (
+		<ul>
+			{categories.map((category) => (
+				<CategoryListItem
+					key={category.id}
+					category={category}
+					onUpdate={onUpdate}
+					onDelete={onDelete}
+				/>
+			))}
+		</ul>
+	);
 }
