@@ -11,8 +11,8 @@
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
 		"test": "vitest --run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage"
 	},
 	"keywords": [],
 	"author": "",
