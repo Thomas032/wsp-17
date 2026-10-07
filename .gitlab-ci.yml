@@ -71,7 +71,7 @@ test-server:
 test-e2e:
   stage: e2e
   # This image ships with browsers preinstalled — Playwright needs one.
-  image: mcr.microsoft.com/playwright:v1.62.1-noble
+  image: mcr.microsoft.com/playwright:v1.63.0-noble
   services:
     - name: postgres:16
   variables:
